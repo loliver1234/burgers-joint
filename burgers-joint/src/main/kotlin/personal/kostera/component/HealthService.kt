@@ -6,12 +6,11 @@ import org.joda.time.format.PeriodFormat
 import personal.kostera.model.GitRepositoryState
 import personal.kostera.model.HealthStatus
 import personal.kostera.model.HealthStatusEnum
-import java.time.Duration
-import java.time.LocalDateTime
 
-class HealthService {
-
-    private val startedAt = LocalDateTime.now()
+class HealthService(
+    private val startedAt: Long = System.currentTimeMillis(),
+    private val currentTimeSupplier: () -> Long = { System.currentTimeMillis() }
+) {
     private val gitConfig
         get() = ConfigurationProperties.fromResource("git.properties")
 
@@ -19,6 +18,6 @@ class HealthService {
         status = HealthStatusEnum.GREEN,
         gitRepositoryState = GitRepositoryState(gitConfig),
         uptime = PeriodFormat.getDefault()
-            .print(Period(Duration.between(startedAt, LocalDateTime.now()).toMillis()))
+            .print(Period(currentTimeSupplier.invoke() - startedAt))
     )
 }
