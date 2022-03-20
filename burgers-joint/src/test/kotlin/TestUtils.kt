@@ -30,7 +30,7 @@ open class BurgersAppTest(
 
     private fun getRestServer(): ApplicationEngine =
         RestServerFactory.getRestServer(
-            BurgersService(),
+            BurgersService(currentTimeSupplier),
             HealthService(testStartTime, currentTimeSupplier)
         )
 }

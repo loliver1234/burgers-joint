@@ -10,6 +10,7 @@ import personal.kostera.component.HealthService
 import personal.kostera.config.ApplicationConfig
 import personal.kostera.factory.RestServerFactory
 import personal.kostera.rest.health
+import personal.kostera.rest.installCreateOrderRoute
 import personal.kostera.utils.getLogger
 import personal.kostera.utils.printConfig
 import kotlin.system.exitProcess
@@ -27,6 +28,7 @@ fun Application.mainModule(
     }
     install(Routing) {
         health(healthService)
+        installCreateOrderRoute(burgersService)
     }
 }
 
